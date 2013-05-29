@@ -1,0 +1,15 @@
+---
+- name: Sync cobbler
+  local_action: command /usr/bin/cobbler sync
+
+- name: Restart service cobblerd
+  service: name=cobblerd state=restarted
+
+- name: Restart service dhcpd
+  service: name=dhcpd state=restarted
+
+- name: Restart service httpd
+  service: name=httpd state=restarted
+
+- name: Restart service xinetd
+  service: name=xinetd state=restarted

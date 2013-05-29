@@ -1,0 +1,20 @@
+---
+- hosts: proxy
+  user: root
+  sudo: yes
+  tasks:
+  - include: proxy/tasks/tinyproxy.yml
+  handlers:
+  - include: proxy/handlers/main.yml
+  tags:
+  - tinyproxy
+
+- hosts: cluster
+  user: root
+  sudo: yes
+  vars_files:
+  - vars/common.yml
+  tasks:
+  - include: proxy/tasks/yum.yml
+  tags:
+  - yum

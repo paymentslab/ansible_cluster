@@ -1,0 +1,3 @@
+proxy_env:
+  http_proxy: "http://{{hostvars[groups['proxy'][0]].ansible_eth0.ipv4.address}}:8888/"
+  https_proxy: "http://{{hostvars[groups['proxy'][0]].ansible_eth0.ipv4.address}}:8888/"

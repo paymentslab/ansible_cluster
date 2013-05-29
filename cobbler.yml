@@ -1,0 +1,11 @@
+---
+- hosts: cobbler
+  user: root
+  sudo: yes
+  vars_files:
+  - vars/cobbler.yml
+  tasks:
+  - include: cobbler/tasks/main.yml
+  handlers:
+  - include: common/handlers/main.yml
+  - include: cobbler/handlers/main.yml

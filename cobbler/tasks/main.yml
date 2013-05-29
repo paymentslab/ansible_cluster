@@ -1,0 +1,45 @@
+---
+- name: Install Cobbler
+  yum: name=$item state=installed
+  with_items:
+    - cobbler
+    - cobbler-web
+    - xinetd
+    - tftp
+    - pykickstart
+    - httpd
+    - dhcp
+    - syslinux
+
+- name: Enable tftp
+  lineinfile: dest=/etc/xinetd.d/tftp regexp=^disable= line=disable=no
+  notify: Restart service xinetd
+  tags:
+  - services
+  - xinetd
+
+- name: Cobbler templates
+  template: src=cobbler/templates/etc/cobbler/$item dest=/etc/cobbler/ owner=root group=root
+  with_items:
+  - dhcp.template
+  - modules.conf
+  - settings
+  notify:
+  - Sync cobbler
+  - Restart service cobblerd
+  tags:
+  - templates
+
+- name: Cobbler kickstart script
+  copy: src=cobbler/files/var/lib/cobbler/kickstarts/cluster.ks dest=/var/lib/cobbler/kickstarts/ owner=root group=root
+
+- name: Enable and Start Services
+  service: name=$item state=started enabled=yes
+  with_items:
+  - cobblerd
+  - xinetd
+  - httpd
+  - dhcpd
+  tags:
+  - services
+

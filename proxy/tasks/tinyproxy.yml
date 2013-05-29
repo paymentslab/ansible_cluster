@@ -1,0 +1,8 @@
+---
+- name: Install tinyproxy
+  yum: name=tinyproxy state=installed
+  notify: Restart service tinyproxy
+
+- name: Configure tinyproxy
+  template: src=proxy/templates/etc/tinyproxy/tinyproxy.conf dest=/etc/tinyproxy/ owner=root group=root
+  notify: Restart service tinyproxy

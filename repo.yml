@@ -1,0 +1,8 @@
+---
+- hosts: all
+  user: root
+  sudo: yes
+  vars_files:
+  - vars/common.yml
+  tasks:
+  - include: common/tasks/repo.yml

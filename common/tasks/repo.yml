@@ -1,0 +1,11 @@
+---
+- name: Download EPEL
+  get_url: url=http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm dest=/tmp/
+  environment: $proxy_env
+  tags:
+  - epel
+
+- name: Install EPEL
+  command: rpm -Uvh /tmp/epel-release-6-8.noarch.rpm creates=/etc/yum.repos.d/epel.repo
+  tags:
+  - epel
